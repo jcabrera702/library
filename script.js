@@ -10,59 +10,76 @@ function Book(title, author, pages, read){
 
 function addBook (title, author, pages, read) {
     const newBook = new Book (title, author, pages, read);
-    myLibrary.push(newBook)
+    myLibrary.push(newBook);
+    return newBook;
 }
 
-function addInfo (){
-    const wrapper = document.querySelector('.book-wrapper');
-    const addBtn = document.querySelector('.add');
-    addBtn.addEventListener('click', (event) =>{
-        const createForm = document.createElement('form');
-        const createLabelTitle = document.createElement('label');
-        const createInputTitle = document.createElement('input');
-        const createLabelAuthor = document.createElement('label');
-        const createInputAuthor = document.createElement('input');
-        const createLabelPages = document.createElement('label');
-        const createInputPages = document.createElement('input');
-        const createLabelRead = document.createElement('label');
-        const createInputRead = document.createElement('input');
-        const createBtnSubmit = document.createElement('button');
+// const myBook = addBook("My journey","Justin","1", "true");
+// {
+//     "id": "af561931-9593-4775-b25a-bab309e3b91b",
+//     "title": "My journey",
+//     "author": "Justin",
+//     "pages": "1",
+//     "read": "true"
+// }
 
-        createForm.setAttribute('class', 'book-card');
-        createLabelTitle.setAttribute('for', 'title');
-        createLabelTitle.textContent = 'Title';
-        const titleInputAttributes ={type: 'text', id: 'title', name: 'title', required: true };
-        for (const key in titleInputAttributes){ createInputTitle.setAttribute(key, titleInputAttributes[key])};
-        createLabelAuthor.setAttribute('for', 'author');
-        createLabelAuthor.textContent = 'Author';
-        const authorInputAttributes = {type: 'text', id: 'author', name: 'author', required: true};
-        for (const key in authorInputAttributes){createInputAuthor.setAttribute(key, authorInputAttributes[key])};
-        createLabelPages.setAttribute('for', 'pages');
-        createLabelPages.textContent = 'Pages';
-        const pagesInputAttributes = {type: 'text', id: 'pages', name: 'pages', required: true};
-        for (const key in pagesInputAttributes){createInputPages.setAttribute(key, pagesInputAttributes )};
-        createLabelRead.setAttribute('for', 'read');
-        createLabelRead.textContent = 'Read?';
-        const readInputAttributes = {type: 'checkbox', name: 'read', id: 'read'};
-        for (const key in readInputAttributes){createInputRead.setAttribute(key, readInputAttributes[key])};
-        createBtnSubmit.setAttribute('type', 'submit');
-        createBtnSubmit.setAttribute('class', 'submit');
-        createBtnSubmit.textContent = 'Add Book';
-
-        
-        const popup = wrapper.append(createForm);
-        const popupElements = createForm.append(createLabelTitle, createInputTitle, createLabelAuthor, createInputAuthor, createLabelPages, createInputPages, createLabelRead, createInputRead, createBtnSubmit);
-        return popup;
-        return popupElements;
-
-    })
-}
-addInfo();
-
+// Create a browse function to locate the ID
 function browse (){
     // User input stuff here
 
     myLibrary.includes("My journey")
 }
 
-// const myBook = addBook("My journey","Justin","1", "true");
+
+
+// Select the necessary elements once outside the function
+const addBtn = document.querySelector('.add'); 
+const newBookForm = document.querySelector('.new-book-form'); 
+const showForm = document.querySelector('.show-form');
+
+// Toggles form to display none
+function toggleFormDisplay() {
+   newBookForm.classList.toggle('hide');
+  
+}
+// display none toggle attached to addBtn click
+addBtn.addEventListener('click', toggleFormDisplay);
+
+
+// access form and actions upon submit:
+const form = document.querySelector('.new-book-form'); 
+form.addEventListener('submit', (event) =>{
+    event.preventDefault();
+    
+    const title = event.target.title.value;
+    const author = event.target.author.value;
+    const pages = event.target.pages.value;
+    const read = event.target.read.checked;
+// Assigned a variable to access the new book
+    const newBook = addBook(title, author,pages, read);
+    newBookId = newBook.id;
+    form.reset();
+    // Display the new book
+    form.remove();
+    const display = document.querySelector('.display');
+    display.style = 'border: 2px solid white';
+    const createIdDisplay = document.createElement('div');
+    createIdDisplay.textContent = `ID: ${newBookId}`
+    const createTitleDisplay = document.createElement('div');
+    createTitleDisplay.textContent = `Title: ${title}`;
+    const createAuthorDisplay = document.createElement('div');
+    createAuthorDisplay.textContent = `Author: ${author}`;
+    const createPagesDisplay = document.createElement('div');
+    createPagesDisplay.textContent = `Pages Total: ${pages}`;
+    const readDisplay = document.createElement('div');
+    if(read === true){
+        readDisplay.textContent = 'This book has been read'
+    } else {
+        readDisplay.textContent = 'This book has not been read'
+    }
+    const createSubBtn = document.createElement('button');
+    createSubBtn.textContent = 'Confirm Add';
+    createSubBtn.setAttribute('class', 'submit');
+    display.append(newBookId, createTitleDisplay, createAuthorDisplay, createPagesDisplay, readDisplay, createSubBtn);
+
+});

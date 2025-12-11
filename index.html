@@ -8,10 +8,39 @@
     <script src="script.js" defer></script>
 </head>
 <body>
+  <!-- .book-wrapper is display flex -->
     <div class="book-wrapper">
       <div class="sidebar">book info
-        <button class="sidebar-btn add">Add</button>
-      </div>     
+        <button class="sidebar-btn add">New Book</button>
+      </div>  
+              <!-- this div holds the form -->
+        <div >
+         <form class="new-book-form hide" >
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title" required>
+
+        <label for="author">Author</label>
+        <input type="text" id="author" name="author" required>
+
+        <label for="pages">Pages</label>
+        <input type="text" id="pages" name="pages" required>
+
+        <label for="read">Read?</label>
+        <input type="checkbox" name="read" id="read">
+
+        <button type="submit">Add Book</button>
+      </form>
+      </div>
+      <!-- The above is the end of the form div -->  
+        <!--The below is book display  -->
+        <div class="display">
+          <!-- <div>id</div>
+          <div>title</div>
+          <div>author</div>
+          <div>pages</div>
+          <div>read: Yes I have read this book</div> -->
+        </div>
+        <!-- The above is book display -->
     
     </div>
 </body>

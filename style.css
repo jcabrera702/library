@@ -5,6 +5,7 @@ body{
     margin: 0;
     padding: 0;
 }
+/* book wrapper holds */
 .book-wrapper{
     display: flex;
 }
@@ -24,14 +25,21 @@ button{
     width: 100%;
     margin-top: 20px;
 }
-.book-card{
+.book-card, .new-book-form {
     border: 2px solid;
     height: 300px;
     width: 200px;
     margin-left: 200px;
+   
 }
 .book-card *{
     margin-top: 5px;
+}
+.book-display{
+    border: 2px solid;
+    height: 300px;
+    width: 200px;
+    margin-left: 200px;
 }
 
 /* Moves card down from flex to block */
@@ -39,4 +47,28 @@ button{
     .book-wrapper{
         display: block;
     }
+}
+
+/* turn on and off form */
+
+/* hides the form by default */
+.hide{
+    display: none !important; 
+  
+}
+
+/* class to show it when the button is clicked */
+.display {
+    display: flex; 
+    flex-direction: column;
+    height: 300px;
+    width: 400px;
+    margin-left: 100px;
+    font-weight: 700;
+    font-size: large;
+    justify-content: space-around;
+}
+.display button{
+    width: 5rem;
+    border-radius: 25px;
 }
