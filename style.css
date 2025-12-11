@@ -1,0 +1,39 @@
+
+body{
+    background-color: #1C1C1C;
+    color: #FFFFFF;
+    margin: 0;
+    padding: 0;
+}
+.book-wrapper{
+    display: flex;
+}
+button{
+    background-color: #7ED957;
+}
+
+.sidebar{
+    display: flex;
+    flex-direction: column;
+    border: 2px solid white;
+    min-height: 300px;
+    width: 100px;
+    align-items: center;
+}
+.sidebar-btn{
+    width: 100%;
+    margin-top: 20px;
+}
+.book-card{
+    border: 2px solid;
+    height: 300px;
+    width: 200px;
+    margin-left: 200px;
+}
+
+/* Moves card down from flex to block */
+@media(max-width: 768px) {
+    .book-wrapper{
+        display: block;
+    }
+}
