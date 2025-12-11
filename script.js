@@ -42,8 +42,10 @@ function toggleFormDisplay() {
    newBookForm.classList.toggle('hide');
   
 }
+
 // display none toggle attached to addBtn click
 addBtn.addEventListener('click', toggleFormDisplay);
+
 
 
 // access form and actions upon submit:
@@ -78,8 +80,16 @@ form.addEventListener('submit', (event) =>{
         readDisplay.textContent = 'This book has not been read'
     }
     const createSubBtn = document.createElement('button');
-    createSubBtn.textContent = 'Confirm Add';
-    createSubBtn.setAttribute('class', 'submit');
-    display.append(newBookId, createTitleDisplay, createAuthorDisplay, createPagesDisplay, readDisplay, createSubBtn);
+    createSubBtn.textContent = 'CLose';
+    createSubBtn.setAttribute('class', 'confirm');
+    display.append(createIdDisplay, createTitleDisplay, createAuthorDisplay, createPagesDisplay, readDisplay, createSubBtn);
+// Removes the display container when clicking the confirm add
+    createSubBtn.addEventListener('click', (event) =>{
+    display.remove();
+});
 
 });
+
+
+
+
