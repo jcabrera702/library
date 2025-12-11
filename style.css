@@ -30,6 +30,9 @@ button{
     width: 200px;
     margin-left: 200px;
 }
+.book-card *{
+    margin-top: 5px;
+}
 
 /* Moves card down from flex to block */
 @media(max-width: 768px) {
