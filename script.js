@@ -90,6 +90,13 @@ form.addEventListener('submit', (event) =>{
 
 });
 
+// Catalogue button actions↓
+const catBtn = document.querySelector('.cat');
+catBtn.addEventListener('click',(event) =>{
+    const cat = document.querySelector('.catalogue');
+    cat.classList.toggle('hide');
+});
+
 
 
 
