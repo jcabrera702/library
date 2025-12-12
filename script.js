@@ -1,4 +1,8 @@
-const myLibrary =[];
+const myLibrary = [
+    { id: 1, title: 'The Great Gatsby', author: 'F. Scott Fitzgerald', pages: 180, read: true },
+    { id: 2, title: '1984', author: 'George Orwell', pages: 328, read: false },
+    { id: 3, title: 'To Kill a Mockingbird', author: 'Harper Lee', pages: 281, read: true }
+];
 
 function Book(title, author, pages, read){
     this.id = crypto.randomUUID();
@@ -12,22 +16,6 @@ function addBook (title, author, pages, read) {
     const newBook = new Book (title, author, pages, read);
     myLibrary.push(newBook);
     return newBook;
-}
-
-// const myBook = addBook("My journey","Justin","1", "true");
-// {
-//     "id": "af561931-9593-4775-b25a-bab309e3b91b",
-//     "title": "My journey",
-//     "author": "Justin",
-//     "pages": "1",
-//     "read": "true"
-// }
-
-// Create a browse function to locate the ID
-function browse (){
-    // User input stuff here
-
-    myLibrary.includes("My journey")
 }
 
 
@@ -79,6 +67,7 @@ form.addEventListener('submit', (event) =>{
     } else {
         readDisplay.textContent = 'This book has not been read'
     }
+    // Button is to close the display when adding new books↓
     const createSubBtn = document.createElement('button');
     createSubBtn.textContent = 'CLose';
     createSubBtn.setAttribute('class', 'confirm');
@@ -94,9 +83,81 @@ form.addEventListener('submit', (event) =>{
 const catBtn = document.querySelector('.cat');
 catBtn.addEventListener('click',(event) =>{
     const cat = document.querySelector('.catalogue');
+    //Create next button
+    const sideNextActive = document.querySelector('#sideNext');
+    if(sideNextActive){
+        sideNext.remove();
+    }else{
+        const side = document.querySelector('.sidebar');
+    sideNext = document.createElement('button');
+    sideNext.textContent = 'Next';
+    sideNext.setAttribute('id', 'sideNext');
+        side.append(sideNext);
+    }
+        
+    let currentIndex = 0;
+    function renderBook() {
+    const book = myLibrary[currentIndex];
+    
+    // 1. Clear the container first (clears old content before adding new)
+    cat.innerHTML = ''; 
+
+    // 2. Create the elements and set their content using textContent
+    // Used createTextNode as a safety measure in security
+    
+    // Title
+    const title = document.createElement('h3');
+    // Using textContent is the key to preventing XSS
+    title.textContent = book.title; 
+    
+    // ID
+    const id = document.createElement('p');
+    // You can safely combine static HTML with dynamically set textContent
+    id.innerHTML = `<strong>ID:</strong> `; 
+    const idValue = document.createTextNode(book.id);
+    id.appendChild(idValue);
+
+    // Author
+    const author = document.createElement('p');
+    author.innerHTML = `<strong>Author:</strong> `;
+    const authorValue = document.createTextNode(book.author);
+    author.appendChild(authorValue);
+
+    // Pages
+    const pages = document.createElement('p');
+    pages.innerHTML = `<strong>Pages:</strong> `;
+    const pagesValue = document.createTextNode(book.pages);
+    pages.appendChild(pagesValue);
+
+    // Read Status
+    const readStatus = document.createElement('p');
+    readStatus.innerHTML = `<strong>Read Status:</strong> `;
+    const statusText = book.read ? 'Completed' : 'Not Read Yet';
+    const readStatusValue = document.createTextNode(statusText);
+    readStatus.appendChild(readStatusValue);
+
+    // 3. Append all new elements to the container, used separate container to make it visually appealing
+    cat.appendChild(title);
+    cat.appendChild(id);
+    cat.appendChild(author);
+    cat.appendChild(pages);
+    cat.appendChild(readStatus);
+
+    console.log(`Currently displaying index: ${currentIndex}`);
+}
+
+    sideNext.addEventListener('click', () =>{
+        currentIndex++;
+        if (currentIndex>= myLibrary.length){
+            currentIndex = 0;
+        }
+        renderBook();
+    })
+
     cat.classList.toggle('hide');
 });
+renderBook();
 
-
+//next is to make cat populate myLibrary[0]
 
 
