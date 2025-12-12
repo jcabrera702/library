@@ -99,6 +99,7 @@ catBtn.addEventListener('click',(event) =>{
     function renderBook() {
     const book = myLibrary[currentIndex];
     
+    
     // 1. Clear the container first (clears old content before adding new)
     cat.innerHTML = ''; 
 
@@ -145,12 +146,31 @@ catBtn.addEventListener('click',(event) =>{
 
     console.log(`Currently displaying index: ${currentIndex}`);
 }
+ const deleteBtn = document.createElement('button');
+            deleteBtn.textContent = 'Delete';
+            deleteBtn.setAttribute('class', 'delete');
+            cat.after(deleteBtn);
+
+            deleteBtn.addEventListener('click', (event)=>{
+                 if(myLibrary.length === 0){
+                    console.log('Library is empty');
+                    cat.classList.toggle('hide');
+                    return;
+                }
+                myLibrary.splice(currentIndex, 1);
+                if(myLibrary.length > 0){
+                    currentIndex = 0;
+                }
+                renderBook();
+            })
+            
 
     sideNext.addEventListener('click', () =>{
         currentIndex++;
         if (currentIndex>= myLibrary.length){
             currentIndex = 0;
         }
+       
         renderBook();
     })
 
