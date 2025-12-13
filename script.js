@@ -69,7 +69,7 @@ form.addEventListener('submit', (event) =>{
     // Display the new book
     form.classList.toggle('hide');
     const display = document.querySelector('.display');
-    display.style = 'border: 2px solid white';
+    display.classList.toggle('hide');
     const createIdDisplay = document.createElement('div');
     createIdDisplay.textContent = `ID: ${newBookId}`
     const createTitleDisplay = document.createElement('div');
@@ -171,9 +171,16 @@ const readButtonText = book.read ? 'read' : 'unread';
 readUpdate.textContent = readButtonText;
 btnDiv.append(readUpdate);
 
-readUpdate.addEventListener('click', (event) =>{
-    book.read = !book.read
+readUpdate.addEventListener('click', () => {
+    // Update the data
+    book.read = !book.read;
     readUpdate.textContent = book.read ? "read" : "unread";
+    // Update the display text of the readStatus element
+    const statusText = book.read ? 'Completed' : 'Not Read Yet';
+    
+    // We clear the old text and add the new one
+    readStatus.innerHTML = `<strong>Read Status:</strong> `;
+    readStatus.appendChild(document.createTextNode(statusText));
     console.log(`Book status changed to: ${book.read}`);
 });
 

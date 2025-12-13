@@ -1,10 +1,14 @@
 
 body{
-    background-color: #2b0101;
+    background: linear-gradient(135deg, #2b0101 0%, #4a0404 50%, #2b0101 100%);
     color: #aaffff;
+    /* This ensures the gradient covers the full height of the screen */
+    min-height: 100vh;
+
+    /* This prevents the "tiling" effect */
+    background-repeat: no-repeat;
     margin: 0;
-    padding-top: 25px;
-    padding-left: 25px;
+    padding-top: 10px;
 }
 /* book wrapper holds */
 .book-wrapper{
@@ -20,11 +24,10 @@ button{
 .sidebar{
     display: flex;
     flex-direction: column;
-    border: 2px solid white;
+    
     min-height: 300px;
-    width: 100px;
+    max-width: 100px;
     align-items: center;
-    background-color: rgba(255, 250, 250, 0.452);
     border-radius: 10px;
 }
 .sidebar-btn, #sideNext{
@@ -32,28 +35,25 @@ button{
     margin-top: 20px;
 }
 .book-card, .new-book-form {
-    border: 2px solid;
+    
     height: 300px;
     width: 200px;
-    margin-left: 20px;
+   
     border-radius: 10px;
-    background-color: rgba(255, 250, 250, 0.452);
    
 }
 .book-card *{
     margin-top: 5px;
 }
-.book-display{
-    border: 2px solid;
-    height: 300px;
-    width: 200px;
-    margin-left: 200px;
-}
+
 
 /* Moves card down from flex to block */
 @media(max-width: 768px) {
-    .book-wrapper{
-        display: block;
+    .book-wrapper > *, body > *, .book-display, .new-book-form{
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;
+        margin-inline: 5px;
     }
 }
 
@@ -70,11 +70,24 @@ button{
     display: flex; 
     flex-direction: column;
     height: 300px;
-    width: 400px;
-    margin-left: 50px;
+    width: 90%;
+    max-width: 400px;
+    margin-left: 10px;
     font-weight: 700;
     font-size: large;
     justify-content: space-around;
+    border-radius: 10px;
+    /* This forces long strings like IDs to break and wrap to the next line */
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-all; /* Extra safety for very long IDs */
+    backdrop-filter: blur(8pxpx);
+    background-color: rgba(255, 255, 255, 0.027);
+    border-top: 1px solid rgba(255, 255, 255, 0.4);
+    border-left: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 3px 3px 3px rgba(0,0,0,0, 0.089);
+    margin-left: 10px;
+    margin-top: 10px;
 }
 .display button{
     width: 5rem;
@@ -84,11 +97,11 @@ button{
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    border: 2px solid;
+    
     height: 300px;
-    width: 300px;
-    margin-left: 20px;;
-    background-color: rgba(255, 250, 250, 0.452);
+    width: min(200px, 90vw);
+   
+    
     border-radius: 10px;
 }
 .cat-main{
@@ -96,6 +109,17 @@ button{
     align-items: center;
     padding: 25%;
 }
-.catalogue:hover{
+/* .catalogue:hover{
     border-color: aqua;
+} */
+
+/* Glass effect */
+.sidebar, .book-card, .new-book-form, .catalogue, .book-card, .new-book-form {
+    backdrop-filter: blur(8pxpx);
+    background-color: rgba(255, 255, 255, 0.027);
+    border-top: 1px solid rgba(255, 255, 255, 0.4);
+    border-left: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 3px 3px 3px rgba(0,0,0,0, 0.089);
+    margin-left: 10px;
+    margin-top: 10px;
 }
