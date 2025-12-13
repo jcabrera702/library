@@ -1,5 +1,5 @@
 const myLibrary = [
-    { id: 1, title: 'The Great Gatsby', author: 'F. Scott Fitzgerald', pages: 180, read: true },
+ { id: 1, title: 'The Great Gatsby', author: 'F. Scott Fitzgerald', pages: 180, read: true },
     { id: 2, title: '1984', author: 'George Orwell', pages: 328, read: false },
     { id: 3, title: 'To Kill a Mockingbird', author: 'Harper Lee', pages: 281, read: true }
 ];
@@ -16,6 +16,23 @@ function addBook (title, author, pages, read) {
     const newBook = new Book (title, author, pages, read);
     myLibrary.push(newBook);
     return newBook;
+}
+function clearCat() {
+    // We check if cat exists to avoid errors
+    const cat = document.querySelector('.catalogue');
+    
+    if (myLibrary.length === 0) {
+        // Hide the container
+        cat.classList.add('hide'); 
+        
+        // Safely remove the button if it exists
+        if (typeof sideNext !== 'undefined' && sideNext) {
+            sideNext.remove();
+            sideNext = null; 
+        }
+        
+        console.log("Library empty: Catalogue hidden and Next button removed.");
+    }
 }
 
 
@@ -50,7 +67,7 @@ form.addEventListener('submit', (event) =>{
     newBookId = newBook.id;
     form.reset();
     // Display the new book
-    form.remove();
+    form.classList.toggle('hide');
     const display = document.querySelector('.display');
     display.style = 'border: 2px solid white';
     const createIdDisplay = document.createElement('div');
@@ -79,24 +96,9 @@ form.addEventListener('submit', (event) =>{
 
 });
 
-// Catalogue button actions↓
-const catBtn = document.querySelector('.cat');
-catBtn.addEventListener('click',(event) =>{
-    const cat = document.querySelector('.catalogue');
-    //Create next button
-    const sideNextActive = document.querySelector('#sideNext');
-    if(sideNextActive){
-        sideNext.remove();
-    }else{
-        const side = document.querySelector('.sidebar');
-    sideNext = document.createElement('button');
-    sideNext.textContent = 'Next';
-    sideNext.setAttribute('id', 'sideNext');
-        side.append(sideNext);
-    }
-        
-    let currentIndex = 0;
+  let currentIndex = 0;
     function renderBook() {
+        const cat = document.querySelector('.catalogue');
     const book = myLibrary[currentIndex];
     
     
@@ -137,46 +139,89 @@ catBtn.addEventListener('click',(event) =>{
     const readStatusValue = document.createTextNode(statusText);
     readStatus.appendChild(readStatusValue);
 
+    const btnDiv = document.createElement('div');
+
     // 3. Append all new elements to the container, used separate container to make it visually appealing
     cat.appendChild(title);
     cat.appendChild(id);
     cat.appendChild(author);
     cat.appendChild(pages);
     cat.appendChild(readStatus);
+    cat.appendChild(btnDiv);
 
-    console.log(`Currently displaying index: ${currentIndex}`);
-}
- const deleteBtn = document.createElement('button');
+// delete button ↓
+    const deleteBtn = document.createElement('button');
             deleteBtn.textContent = 'Delete';
             deleteBtn.setAttribute('class', 'delete');
-            cat.after(deleteBtn);
+            btnDiv.append(deleteBtn);
 
             deleteBtn.addEventListener('click', (event)=>{
-                 if(myLibrary.length === 0){
-                    console.log('Library is empty');
-                    cat.classList.toggle('hide');
-                    return;
-                }
                 myLibrary.splice(currentIndex, 1);
                 if(myLibrary.length > 0){
                     currentIndex = 0;
+                } else {
+                    clearCat();
                 }
                 renderBook();
+                
             })
-            
+// read update button
+const readUpdate = document.createElement('button');
+const readButtonText = book.read ? 'read' : 'unread';
+readUpdate.textContent = readButtonText;
+btnDiv.append(readUpdate);
 
-    sideNext.addEventListener('click', () =>{
-        currentIndex++;
-        if (currentIndex>= myLibrary.length){
-            currentIndex = 0;
-        }
-       
-        renderBook();
-    })
+readUpdate.addEventListener('click', (event) =>{
+    book.read = !book.read
+    readUpdate.textContent = book.read ? "read" : "unread";
+    console.log(`Book status changed to: ${book.read}`);
+});
 
+
+    console.log(`Currently displaying index: ${currentIndex}`);
+}
+
+// Catalogue button actions↓
+const catBtn = document.querySelector('.cat');
+catBtn.addEventListener('click',(event) =>{
+    const cat = document.querySelector('.catalogue');
     cat.classList.toggle('hide');
+    // Show first book
+    if (!cat.classList.contains('hide')) {
+        currentIndex = 0; 
+        renderBook();
+    }
+    //Create next button
+   // Locate the existing button if it's already on the page
+const sideNextActive = document.querySelector('#sideNext');
+
+if (myLibrary.length > 1) {
+    // Only create the button if it doesn't already exist
+    if (!sideNextActive) {
+        const side = document.querySelector('.sidebar');
+        sideNext = document.createElement('button'); 
+        sideNext.textContent = 'Next';
+        sideNext.setAttribute('id', 'sideNext');
+        side.append(sideNext);
+
+        sideNext.addEventListener('click', () => {
+            currentIndex++;
+            if (currentIndex >= myLibrary.length) {
+                currentIndex = 0;
+            } 
+            renderBook();
+        });
+    }
+} else {
+    if (sideNextActive) {
+        sideNextActive.remove();
+        // Clear the global reference if you are using one
+        if (typeof sideNext !== 'undefined') sideNext = null;
+    }
+}
 });
 renderBook();
+
 
 //next is to make cat populate myLibrary[0]
 
