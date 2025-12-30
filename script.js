@@ -4,12 +4,14 @@ const myLibrary = [
     { id: 3, title: 'To Kill a Mockingbird', author: 'Harper Lee', pages: 281, read: true }
 ];
 
-function Book(title, author, pages, read){
-    this.id = crypto.randomUUID();
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
+class Book{
+    constructor(title, author, pages, read){
+        this.id = crypto.randomUUID();
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+    }
 }
 
 function addBook (title, author, pages, read) {
